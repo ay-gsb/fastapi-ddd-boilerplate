@@ -1,4 +1,10 @@
-from fastapi import APIRouter
+from typing import List
+
+from fastapi import APIRouter, Depends
+
+import analytics.api.dependencies as deps
+import analytics.api.schemas as schemas
+import analytics.domain.services as domain_services
 
 router = APIRouter()
 
@@ -11,3 +17,10 @@ async def root():
 @router.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
+
+@router.get("/sports", response_model=List[schemas.Sport])
+async def get_sports(
+    srv: domain_services.SportService = Depends(deps.get_sport_service),
+):
+    return await srv.get_all()

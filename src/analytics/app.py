@@ -4,9 +4,9 @@ import anyio
 import uvicorn
 from fastapi import FastAPI
 
+from analytics.api.routes import router
 from analytics.config import settings
 from analytics.infra.db import db_manager
-from analytics.api.routes import router
 
 
 @asynccontextmanager
